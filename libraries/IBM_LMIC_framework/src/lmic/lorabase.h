@@ -341,8 +341,8 @@ enum {
 // Device address
 typedef u4_t devaddr_t;
 
-// RX quality (device)
-enum { RSSI_OFF=64, SNR_SCALEUP=4 };
+// RX quality (device) params from HopeRF datasheet
+enum { RSSI_OFF=-157, SNR_SCALEUP=4 };
 
 inline sf_t  getSf   (rps_t params)            { return   (sf_t)(params &  0x7); }
 inline rps_t setSf   (rps_t params, sf_t sf)   { return (rps_t)((params & ~0x7) | sf); }
