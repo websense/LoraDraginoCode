@@ -753,7 +753,7 @@ void radio_irq_handler (u1_t dio) {
             readBuf(RegFifo, LMIC.frame, LMIC.dataLen);
             // read rx quality parameters
             LMIC.snr  = readReg(LORARegPktSnrValue)/4; // SNR [dB] 
-            LMIC.rssi = -157 + readReg(LORARegPktRssiValue)  // RSSI [dBm] (-196...+63)
+            LMIC.rssi = -157 + readReg(LORARegPktRssiValue);  // RSSI [dBm] (-196...+63)
         } else if( flags & IRQ_LORA_RXTOUT_MASK ) {
             // indicate timeout
             LMIC.dataLen = 0;
