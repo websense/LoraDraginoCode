@@ -752,14 +752,13 @@ void radio_irq_handler (u1_t dio) {
             // now read the FIFO
             readBuf(RegFifo, LMIC.frame, LMIC.dataLen);
             // read rx quality parameters
-            LMIC.snr = ((s1_t) readReg(LORARegPktSnrValue))/4; // SNR [dB]
-            if (LMIC.snr < (s1_t) 0 ) {
-                LMIC.rssi = -157 + (s1_t)readReg(LORARegPktRssiValue) + LMIC.snr;
-            } else {
+            LMIC.snr  = ((s1_t) readReg(LORARegPktSnrValue))/4; // SNR [dB]
+            LMIC.rssi = -157 + readReg(LORARegPktRssiValue); // We will need to fix the SNR value at a higher level as LMIC.rssi is an 8
+            if (LMIC.snr >= 0 ) {
                 if (LMIC.rssi > (s1_t)-100) {
-                    LMIC.rssi = -157 + (s1_t)readReg(LORARegPktRssiValue) * 16/15;
+                    LMIC.rssi = -157 + readReg(LORARegPktRssiValue) * 16/15;
                 } else {
-                    LMIC.rssi = -157 + (s1_t)readReg(LORARegPktRssiValue);
+                    LMIC.rssi = -157 + readReg(LORARegPktRssiValue);
                 }
             }
         } else if( flags & IRQ_LORA_RXTOUT_MASK ) {
